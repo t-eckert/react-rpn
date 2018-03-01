@@ -12,13 +12,14 @@ import keyboard from './Keyboard.png'
 
 class App extends Component {
   state = {
-    stack: [0,0,0,0,0,0,0,0,0]
+    stack: [0,0,0,0,0,0,0,0,0],
+    width: window.innerWidth
   }
 
   pushToStackHandler = () => {
     const stackVals = this.state.stack
     this.setState({stack: [0,...stackVals]})
-    console.log("ptsh")
+    console.log("Value pushed to stack.")
   }
 
   appendToInputActive = (value) => {
@@ -27,12 +28,6 @@ class App extends Component {
     inputActive = inputActive ? inputActive.toString() +value.toString() : value.toString()
     this.setState({stack: [inputActive,...stackVals.slice(1)]})
     console.log(inputActive)
-  }
-
-  piToInputActive = () => {
-    const stackVals = this.state.stack
-    let inputActive = (3.14159265359).toString()
-    this.setState({stack: [inputActive,...stackVals.slice(1)]})
   }
 
   clearHandler = () => {
@@ -60,9 +55,15 @@ class App extends Component {
   decimalToInputActive = () => {
     const stackVals = this.state.stack
     let inputActive = stackVals[0]
-    inputActive = inputActive.toString() +'.'
-    this.setState({stack: [inputActive,...stackVals.slice(1)]})
-    console.log(inputActive)
+    inputActive = inputActive.toString()
+    if (inputActive.includes('.')) {
+      console.log("A . is already in the display.")
+    }
+    else {
+      inputActive = inputActive +'.'
+      this.setState({stack: [inputActive,...stackVals.slice(1)]})
+      console.log(inputActive)
+    } 
   }
 
   additionHandler = () => {
@@ -217,21 +218,182 @@ class App extends Component {
     }
   }
 
+  constructor(props) {
+    super(props);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  updateWindowDimensions() {
+    this.setState({width: window.innerWidth});
+    console.log(this.state.width)
+  }
+
   componentDidMount() {
     document.addEventListener('keydown', this.keyDownHandler)
+    this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions)
   }
   
   componentWillUnmount() {
     document.removeEventListener('keydown', this.keyDownHandler)
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+
+  responsiveHandler = () => {
+    if(this.state.width <= 570) {
+      
+    }
+    else {
+      {
+        
+      }
+    }
   }
 
   render() {
+    let operations = null
+    let panelButtons = null
+
+    if (this.state.width <= 570) {
+      operations = (
+        <div>
+          <div className="row">
+            <div className="col-2"><Operation symbol='+' click={()=>this.additionHandler()}/></div>
+            <div className="col-2"><Operation symbol='–' click={()=>this.subtractionHandler()}/></div>
+            <div className="col"></div>
+            <div className="col-2"><Clear click={() => this.clearHandler()}/></div>
+            <div className="col-1"></div>
+          </div>
+          <div className="row">
+            <div className="col-2"><Operation symbol='×' click={()=>this.multiplicationHandler()}/></div> 
+            <div className="col-2"><Operation symbol='÷' click={()=>this.divisionHandler()}/></div>
+            <div className="col"></div>
+            <div className="col-2"><Push click={() => this.pushToStackHandler()}/></div>
+            <div className="col-1"></div>
+          </div>
+        </div>
+      )
+      panelButtons = (
+        <div>
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-2"><Number symbol='7' click={() => this.appendToInputActive(7)}/></div>
+            <div className="col"></div>
+            <div className="col-2"><Number symbol='8' click={() => this.appendToInputActive(8)}/></div>
+            <div className="col"></div>
+            <div className="col-2"><Number symbol='9' click={() => this.appendToInputActive(9)}/></div>
+            <div className="col-2"></div>
+          </div>
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-2"><Number symbol='4' click={() => this.appendToInputActive(4)}/></div>
+            <div className="col"></div>
+            <div className="col-2"><Number symbol='5' click={() => this.appendToInputActive(5)}/></div>
+            <div className="col"></div>
+            <div className="col-2"><Number symbol='6' click={() => this.appendToInputActive(6)}/></div>
+            <div className="col-2"></div>
+          </div>
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-2"><Number symbol='1' click={() => this.appendToInputActive(1)}/></div>
+            <div className="col"></div>
+            <div className="col-2"><Number symbol='2' click={() => this.appendToInputActive(2)}/></div>
+            <div className="col"></div>
+            <div className="col-2"><Number symbol='3' click={() => this.appendToInputActive(3)}/></div>
+            <div className="col-2"></div>
+          </div>
+          <div className="row">
+            <div className="col-1"></div>  
+            <div className="col-2"><Decimal symbol='.' click={() => this.decimalToInputActive()}/></div>
+            <div className="col"></div>
+            <div className="col-2"><Number symbol='0' click={() => this.appendToInputActive(0)}/></div>
+            <div className="col"></div>
+            <div className="col-4"></div>
+          </div>
+          <hr/>
+          <div className="row">
+            <div className="col-1"></div> 
+            <div className="col-2"><ClearScreen symbol='C' click={() => this.clearScreen()}/></div>
+            <div className="col-1"></div> 
+            <div className="col-2"><ClearAll symbol='AC' click={() => this.clearAll()}/></div>
+            <div className="col"></div> 
+          </div>
+          <div className="row">
+            <div className="col-1"></div> 
+            <div className="col-2"><Action symbol='x²' click={() => this.actionSquare()}/></div>
+            <div className="col-1"></div> 
+            <div className="col-2"><Action symbol='√' click={() => this.actionSQRT()}/></div>
+            <div className="col-1"></div>
+            <div className="col-2"><Action symbol='+/-' click={() => this.actionPM()}/></div>
+            <div className="col"></div> 
+          </div>
+          <div className="row">
+            <div className="col-1"></div> 
+            <div className="col-2"><Action symbol='SIN' click={() => this.actionSIN()}/></div>
+            <div className="col-1"></div> 
+            <div className="col-2"><Action symbol='COS' click={() => this.actionCOS()}/></div>
+            <div className="col-1"></div> 
+            <div className="col-2"><Action symbol='TAN' click={() => this.actionTAN()}/></div>
+            <div className="col"></div> 
+          </div>
+        </div>
+      )
+    }
+    else {
+      operations = (
+        <div className="row">
+          <div className="col-2"><Operation symbol='+' click={()=>this.additionHandler()}/></div> 
+          <div className="col-2"><Operation symbol='–' click={()=>this.subtractionHandler()}/></div> 
+          <div className="col-2"><Operation symbol='×' click={()=>this.multiplicationHandler()}/></div> 
+          <div className="col-2"><Operation symbol='÷' click={()=>this.divisionHandler()}/></div>
+          <div className="col-2"><Clear click={() => this.clearHandler()}/></div>
+          <div className="col-2"><Push click={() => this.pushToStackHandler()}/></div> 
+        </div>
+      )
+      panelButtons = (
+        <div>
+          <div className="row">
+            <div className="col-2"><ClearScreen symbol='C' click={() => this.clearScreen()}/></div>
+            <div className="col-2"><ClearAll symbol='AC' click={() => this.clearAll()}/></div>
+            <div className="col-2"/>
+            <div className="col-2"><Number symbol='7' click={() => this.appendToInputActive(7)}/></div>
+            <div className="col-2"><Number symbol='8' click={() => this.appendToInputActive(8)}/></div>
+            <div className="col-2"><Number symbol='9' click={() => this.appendToInputActive(9)}/></div>
+          </div>
+          <div className="row">
+            <div className="col-2"><Action symbol='x²' click={() => this.actionSquare()}/></div>
+            <div className="col-2"><Action symbol='√' click={() => this.actionSQRT()}/></div>
+            <div className="col-2"/>
+            <div className="col-2"><Number symbol='4' click={() => this.appendToInputActive(4)}/></div>
+            <div className="col-2"><Number symbol='5' click={() => this.appendToInputActive(5)}/></div>
+            <div className="col-2"><Number symbol='6' click={() => this.appendToInputActive(6)}/></div>
+          </div>
+          <div className="row">
+            <div className="col-2"><Action symbol='SIN' click={() => this.actionSIN()}/></div>
+            <div className="col-2"><Action symbol='COS' click={() => this.actionCOS()}/></div>
+            <div className="col-2"/>
+            <div className="col-2"><Number symbol='1' click={() => this.appendToInputActive(1)}/></div>
+            <div className="col-2"><Number symbol='2' click={() => this.appendToInputActive(2)}/></div>
+            <div className="col-2"><Number symbol='3' click={() => this.appendToInputActive(3)}/></div>
+          </div>
+          <div className="row">
+            <div className="col-2"><Action symbol='TAN' click={() => this.actionTAN()}/></div>
+            <div className="col-2"><Action symbol='+/-' click={() => this.actionPM()}/></div>
+            <div className="col-2"/>
+            <div className="col-2"><Decimal symbol='.' click={() => this.decimalToInputActive()}/></div>
+            <div className="col-2"><Number symbol='0' click={() => this.appendToInputActive(0)}/></div>
+            <div className="col-2"/>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className="App">
         <div className="container">
           <div className="row">
             <div className="col"/>
-            <div className="col-lg-6 col-md-10 col-12">
+            <div className="col-xl-6 col-lg-8 col-md-10 col-12">
               <div className="panel-stack">
                 <h2 className="input">{this.state.stack[3]}</h2>
                 <h2 className="input">{this.state.stack[2]}</h2>
@@ -241,58 +403,22 @@ class App extends Component {
                 <div className="jumbotron panel-input">
                   <h1 className="input-active">{this.state.stack[0]}</h1>
                   <hr/>
-                  <div className="row">
-                    <div className="col-2"><Operation symbol='+' click={()=>this.additionHandler()}/></div> 
-                    <div className="col-2"><Operation symbol='–' click={()=>this.subtractionHandler()}/></div> 
-                    <div className="col-2"><Operation symbol='×' click={()=>this.multiplicationHandler()}/></div> 
-                    <div className="col-2"><Operation symbol='÷' click={()=>this.divisionHandler()}/></div>
-                    <div className="col-2"><Clear click={() => this.clearHandler()}/></div>
-                    <div className="col-2"><Push click={() => this.pushToStackHandler()}/></div> 
-                  </div>
+                  <div>{operations}</div>
                 </div>
-                <div className="row">
-                  <div className="col-2"><ClearScreen symbol='C' click={() => this.clearScreen()}/></div>
-                  <div className="col-2"><ClearAll symbol='AC' click={() => this.clearAll()}/></div>
-                  <div className="col-2"/>
-                  <div className="col-2"><Number symbol='7' click={() => this.appendToInputActive(7)}/></div>
-                  <div className="col-2"><Number symbol='8' click={() => this.appendToInputActive(8)}/></div>
-                  <div className="col-2"><Number symbol='9' click={() => this.appendToInputActive(9)}/></div>
-                </div>
-                <div className="row">
-                  <div className="col-2"><Action symbol='x²' click={() => this.actionSquare()}/></div>
-                  <div className="col-2"><Action symbol='√' click={() => this.actionSQRT()}/></div>
-                  <div className="col-2"/>
-                  <div className="col-2"><Number symbol='4' click={() => this.appendToInputActive(4)}/></div>
-                  <div className="col-2"><Number symbol='5' click={() => this.appendToInputActive(5)}/></div>
-                  <div className="col-2"><Number symbol='6' click={() => this.appendToInputActive(6)}/></div>
-                </div>
-                <div className="row">
-                  <div className="col-2"><Action symbol='SIN' click={() => this.actionSIN()}/></div>
-                  <div className="col-2"><Action symbol='COS' click={() => this.actionCOS()}/></div>
-                  <div className="col-2"/>
-                  <div className="col-2"><Number symbol='1' click={() => this.appendToInputActive(1)}/></div>
-                  <div className="col-2"><Number symbol='2' click={() => this.appendToInputActive(2)}/></div>
-                  <div className="col-2"><Number symbol='3' click={() => this.appendToInputActive(3)}/></div>
-                </div>
-                <div className="row">
-                  <div className="col-2"><Action symbol='TAN' click={() => this.actionTAN()}/></div>
-                  <div className="col-2"><Action symbol='+/-' click={() => this.actionPM()}/></div>
-                  <div className="col-2"/>
-                  <div className="col-2"><Decimal symbol='.' click={() => this.decimalToInputActive()}/></div>
-                  <div className="col-2"><Number symbol='0' click={() => this.appendToInputActive(0)}/></div>
-                  <div className="col-2"/>
-                </div>
+                <div>{panelButtons}</div>
               </div>
               <h3>Reverse Polish Calculator</h3>
               <h4>Instructions</h4>
               <p>
                 This calculator uses Reverse Polish or Postfix notation. Values are followed by operators. To see this in action, let's try adding 4 and 5 together. In the more common Infix notation, this would be written as <code>4 + 5</code>. However, in Reverse Polish notation, we write it <code>4 5 +</code>. To calculate this we
+              </p>
                 <ol>
                   <li>Type <code>4</code>. It should show up on the display.</li>
                   <li>Press the <i className="fas fa-arrow-up"></i> button or the "Return" key. This pushes the value onto our stack of numbers and resets the display to zero.</li>
                   <li>Type <code>5</code>.</li>
                   <li>Press the + button or "+" key. This evaluates the value at the top of the stack (currently 4) with the value on the display using the addition operator. The display should now read 9.</li>
                 </ol>
+              <p>
                 You can read more about Reverse Polish Notation <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">here</a>.
               </p>
               <h3>Keyboard Shortcuts</h3>

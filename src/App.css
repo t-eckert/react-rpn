@@ -14,7 +14,7 @@ body {
 }
 
 .jumbotron {
-  padding: 8px;
+  padding: 4px;
 }
 
 .panel-input {
@@ -24,7 +24,7 @@ body {
 
 .input {
   text-align: right;
-  margin-right: 16px;
+  margin-right: 12px;
 }
 /* 
 .live-input{
