@@ -239,17 +239,6 @@ class App extends Component {
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
-  responsiveHandler = () => {
-    if(this.state.width <= 570) {
-      
-    }
-    else {
-      {
-        
-      }
-    }
-  }
-
   render() {
     let operations = null
     let panelButtons = null
