@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import Number from './Number/Number.js'
-import Push from './Push/Push.js'
-import Clear from './Clear/Clear.js'
-import ClearScreen from './ClearScreen/ClearScreen.js'
-import ClearAll from './ClearAll/ClearAll.js'
-import Decimal from './Decimal/Decimal.js'
-import Operation from './Operation/Operation.js'
-import Action from './Action/Action.js'
+import Number from './OperandButton/OperandButton';
+import Push from './Push/Push.js';
+import Clear from './Clear/Clear.js';
+import ClearScreen from './ClearScreen/ClearScreen.js';
+import ClearAll from './ClearAll/ClearAll.js';
+import Operation from './Operation/Operation.js';
+import Action from './Action/Action.js';
+import Footer from './Footer/Footer.js';
+import Instructions from './Instructions/Instructions.js';
 import './App.css';
-import keyboard from './Keyboard.png'
+
+
 
 class App extends Component {
   state = {
@@ -17,17 +19,17 @@ class App extends Component {
   }
 
   pushToStackHandler = () => {
-    const stackVals = this.state.stack
-    this.setState({stack: [0,...stackVals]})
-    console.log("Value pushed to stack.")
+    const stackVals = this.state.stack;
+    this.setState({stack: [0,...stackVals]});
+    console.log("Value pushed to stack.");
   }
 
   appendToInputActive = (value) => {
-    const stackVals = this.state.stack
-    let inputActive = stackVals[0]
-    inputActive = inputActive ? inputActive.toString() +value.toString() : value.toString()
-    this.setState({stack: [inputActive,...stackVals.slice(1)]})
-    console.log(inputActive)
+    const stackVals = this.state.stack;
+    let inputActive = stackVals[0];
+    inputActive = inputActive ? inputActive.toString() +value.toString() : value.toString();
+    this.setState({stack: [inputActive,...stackVals.slice(1)]});
+    console.log(inputActive);
   }
 
   clearHandler = () => {
@@ -53,16 +55,19 @@ class App extends Component {
   }
 
   decimalToInputActive = () => {
-    const stackVals = this.state.stack
-    let inputActive = stackVals[0]
-    inputActive = inputActive.toString()
+    const stackVals = this.state.stack;
+    let inputActive = stackVals[0];
+    inputActive = inputActive.toString();
+
+    // Prevent more than one decimal in inputActive (e.g. 192.34.02)
+    // Fails silently and prints issue to log.
     if (inputActive.includes('.')) {
-      console.log("A . is already in the display.")
+      console.log("A . is already in the display.");
     }
     else {
-      inputActive = inputActive +'.'
-      this.setState({stack: [inputActive,...stackVals.slice(1)]})
-      console.log(inputActive)
+      inputActive = inputActive +'.';
+      this.setState({stack: [inputActive,...stackVals.slice(1)]});
+      console.log(inputActive);
     } 
   }
 
@@ -147,6 +152,8 @@ class App extends Component {
   }
 
   keyDownHandler = (event) => {
+
+    // Letter keys may be used to input numbers.
     const kbControls = {
       'v' : 0,
       'b' : 1,
@@ -293,7 +300,7 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="col-1"></div>  
-            <div className="col-2"><Decimal symbol='.' click={() => this.decimalToInputActive()}/></div>
+            <div className="col-2"><Number symbol='.' click={() => this.decimalToInputActive()}/></div>
             <div className="col"></div>
             <div className="col-2"><Number symbol='0' click={() => this.appendToInputActive(0)}/></div>
             <div className="col"></div>
@@ -369,7 +376,7 @@ class App extends Component {
             <div className="col-2"><Action symbol='TAN' click={() => this.actionTAN()}/></div>
             <div className="col-2"><Action symbol='+/-' click={() => this.actionPM()}/></div>
             <div className="col-2"/>
-            <div className="col-2"><Decimal symbol='.' click={() => this.decimalToInputActive()}/></div>
+            <div className="col-2"><Number symbol='.' click={() => this.decimalToInputActive()}/></div>
             <div className="col-2"><Number symbol='0' click={() => this.appendToInputActive(0)}/></div>
             <div className="col-2"/>
           </div>
@@ -397,53 +404,12 @@ class App extends Component {
                 <div>{panelButtons}</div>
               </div>
               <h3>Reverse Polish Calculator</h3>
-              <h4>Instructions</h4>
-              <p>
-                This calculator uses Reverse Polish or Postfix notation. Values are followed by operators. To see this in action, let's try adding 4 and 5 together. In the more common Infix notation, this would be written as <code>4 + 5</code>. However, in Reverse Polish notation, we write it <code>4 5 +</code>. To calculate this we
-              </p>
-                <ol>
-                  <li>Type <code>4</code>. It should show up on the display.</li>
-                  <li>Press the <i className="fas fa-arrow-up"></i> button or the "Return" key. This pushes the value onto our stack of numbers and resets the display to zero.</li>
-                  <li>Type <code>5</code>.</li>
-                  <li>Press the + button or "+" key. This evaluates the value at the top of the stack (currently 4) with the value on the display using the addition operator. The display should now read 9.</li>
-                </ol>
-              <p>
-                You can read more about Reverse Polish Notation <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">here</a>.
-              </p>
-              <h3>Keyboard Shortcuts</h3>
-              <p>
-                The calculator may be operated using the number keys on your computer. Additionally, a layout of keys like those traditionally found on a calculator is emulated with the following keyboard setup:  
-                <img src={keyboard} className="img-fluid rounded" alt="Responsive"/>
-              </p>  
-              <h3>A Note on Numerical Precision</h3>
-              <p>
-                This calculator uses the JavaScript math engine for computations. This is reliable for many every-day uses (e.g. taxes, homework) but should be avoided for high-precision calculations (e.g. nuclear cross sections, fluid simulations).
-              </p>
+              <Instructions/>
             </div>
             <div className="col"/>
           </div>          
         </div>
-        <footer className="page-footer">
-          <div className="container">
-            <div className="row">
-              <div className="col"/>
-              <div className="col-lg-6 col-md-10 col-12">
-                <br/>
-                <h2>About</h2>
-                <p>
-                  My name is Thomas Eckert. This is my first web application in React. If you manage to break it, want to report issues, or have questions you can let me know by <a href="mailto:t_eckert@outlook.com">email</a>.
-                </p>
-                <p>
-                  <a href="https://github.com/t-eckert/react-rpn">View the code for this app on GitHub</a>
-                </p>  
-                <p>
-                  <a href="https://thomaseckert.org/">Learn more at my website</a>
-                </p>
-              </div>
-              <div className="col"/>
-            </div>
-          </div> 
-        </footer>
+        <Footer/>
       </div>
     );
   }
