@@ -1,6 +1,6 @@
 import React from 'react';
 
-const operandButton = (props) => {
+const operand = (props) => {
   let btnStyle = "";
 
   if(props.symbol === "."){
@@ -9,8 +9,6 @@ const operandButton = (props) => {
   else {
     btnStyle = "btn-number"
   }
-
-  console.log(btnStyle)
 
   return (
     <div className="Number">
@@ -25,4 +23,4 @@ const operandButton = (props) => {
   )
 };
 
-export default operandButton;
+export default operand;
