@@ -13,7 +13,17 @@ const button = (props) => {
     "6": "btn-round btn-number",
     "7": "btn-round btn-number",
     "8": "btn-round btn-number",
-    "9": "btn-round btn-number"
+    "9": "btn-round btn-number",
+    "+": "btn-operation",
+    "–": "btn-operation",
+    "×": "btn-operation",
+    "÷": "btn-operation",
+    "x²": "btn-action",
+    "√": "btn-action",
+    "+/-": "btn-action",
+    "SIN": "btn-action",
+    "COS": "btn-action",
+    "TAN": "btn-action"
   }
 
   let btnStyle = styles[props.symbol];

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Operation from './Operation/Operation';
 import Push from './Push/Push.js';
 import Clear from './Clear/Clear.js';
 import ClearScreen from './ClearScreen/ClearScreen.js';
@@ -252,15 +251,15 @@ class App extends Component {
       operations = (
         <div>
           <div className="row">
-            <div className="col-2"><Operation symbol='+' click={()=>this.additionHandler()}/></div>
-            <div className="col-2"><Operation symbol='–' click={()=>this.subtractionHandler()}/></div>
+            <div className="col-2"><Button symbol='+' click={()=>this.additionHandler()}/></div>
+            <div className="col-2"><Button symbol='–' click={()=>this.subtractionHandler()}/></div>
             <div className="col"></div>
             <div className="col-2"><Clear click={() => this.clearHandler()}/></div>
             <div className="col-1"></div>
           </div>
           <div className="row">
-            <div className="col-2"><Operation symbol='×' click={()=>this.multiplicationHandler()}/></div> 
-            <div className="col-2"><Operation symbol='÷' click={()=>this.divisionHandler()}/></div>
+            <div className="col-2"><Button symbol='×' click={()=>this.multiplicationHandler()}/></div> 
+            <div className="col-2"><Button symbol='÷' click={()=>this.divisionHandler()}/></div>
             <div className="col"></div>
             <div className="col-2"><Push click={() => this.pushToStackHandler()}/></div>
             <div className="col-1"></div>
@@ -314,20 +313,20 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="col-1"></div> 
-            <div className="col-2"><Action symbol='x²' click={() => this.actionSquare()}/></div>
+            <div className="col-2"><Button symbol='x²' click={() => this.actionSquare()}/></div>
             <div className="col-1"></div> 
-            <div className="col-2"><Action symbol='√' click={() => this.actionSQRT()}/></div>
+            <div className="col-2"><Button symbol='√' click={() => this.actionSQRT()}/></div>
             <div className="col-1"></div>
-            <div className="col-2"><Action symbol='+/-' click={() => this.actionPM()}/></div>
+            <div className="col-2"><Button symbol='+/-' click={() => this.actionPM()}/></div>
             <div className="col"></div> 
           </div>
           <div className="row">
             <div className="col-1"></div> 
-            <div className="col-2"><Action symbol='SIN' click={() => this.actionSIN()}/></div>
+            <div className="col-2"><Button symbol='SIN' click={() => this.actionSIN()}/></div>
             <div className="col-1"></div> 
-            <div className="col-2"><Action symbol='COS' click={() => this.actionCOS()}/></div>
+            <div className="col-2"><Button symbol='COS' click={() => this.actionCOS()}/></div>
             <div className="col-1"></div> 
-            <div className="col-2"><Action symbol='TAN' click={() => this.actionTAN()}/></div>
+            <div className="col-2"><Button symbol='TAN' click={() => this.actionTAN()}/></div>
             <div className="col"></div> 
           </div>
         </div>
@@ -336,10 +335,10 @@ class App extends Component {
     else {
       operations = (
         <div className="row">
-          <div className="col-2"><Operation symbol='+' click={()=>this.additionHandler()}/></div> 
-          <div className="col-2"><Operation symbol='–' click={()=>this.subtractionHandler()}/></div> 
-          <div className="col-2"><Operation symbol='×' click={()=>this.multiplicationHandler()}/></div> 
-          <div className="col-2"><Operation symbol='÷' click={()=>this.divisionHandler()}/></div>
+          <div className="col-2"><Button symbol='+' click={()=>this.additionHandler()}/></div> 
+          <div className="col-2"><Button symbol='–' click={()=>this.subtractionHandler()}/></div> 
+          <div className="col-2"><Button symbol='×' click={()=>this.multiplicationHandler()}/></div> 
+          <div className="col-2"><Button symbol='÷' click={()=>this.divisionHandler()}/></div>
           <div className="col-2"><Clear click={() => this.clearHandler()}/></div>
           <div className="col-2"><Push click={() => this.pushToStackHandler()}/></div> 
         </div>
