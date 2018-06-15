@@ -3,7 +3,6 @@ import Push from './Push/Push.js';
 import Clear from './Clear/Clear.js';
 import ClearScreen from './ClearScreen/ClearScreen.js';
 import ClearAll from './ClearAll/ClearAll.js';
-import Action from './Action/Action.js';
 import Footer from './Text/Footer/Footer.js';
 import Instructions from './Text/Instructions/Instructions.js';
 import Button from './Button/Button'
@@ -354,24 +353,24 @@ class App extends Component {
             <div className="col-2"><Button symbol='9' click={() => this.appendToInputActive(9)}/></div>
           </div>
           <div className="row">
-            <div className="col-2"><Action symbol='x²' click={() => this.actionSquare()}/></div>
-            <div className="col-2"><Action symbol='√' click={() => this.actionSQRT()}/></div>
+            <div className="col-2"><Button symbol='x²' click={() => this.actionSquare()}/></div>
+            <div className="col-2"><Button symbol='√' click={() => this.actionSQRT()}/></div>
             <div className="col-2"/>
             <div className="col-2"><Button symbol='4' click={() => this.appendToInputActive(4)}/></div>
             <div className="col-2"><Button symbol='5' click={() => this.appendToInputActive(5)}/></div>
             <div className="col-2"><Button symbol='6' click={() => this.appendToInputActive(6)}/></div>
           </div>
           <div className="row">
-            <div className="col-2"><Action symbol='SIN' click={() => this.actionSIN()}/></div>
-            <div className="col-2"><Action symbol='COS' click={() => this.actionCOS()}/></div>
+            <div className="col-2"><Button symbol='SIN' click={() => this.actionSIN()}/></div>
+            <div className="col-2"><Button symbol='COS' click={() => this.actionCOS()}/></div>
             <div className="col-2"/>
             <div className="col-2"><Button symbol='1' click={() => this.appendToInputActive(1)}/></div>
             <div className="col-2"><Button symbol='2' click={() => this.appendToInputActive(2)}/></div>
             <div className="col-2"><Button symbol='3' click={() => this.appendToInputActive(3)}/></div>
           </div>
           <div className="row">
-            <div className="col-2"><Action symbol='TAN' click={() => this.actionTAN()}/></div>
-            <div className="col-2"><Action symbol='+/-' click={() => this.actionPM()}/></div>
+            <div className="col-2"><Button symbol='TAN' click={() => this.actionTAN()}/></div>
+            <div className="col-2"><Button symbol='+/-' click={() => this.actionPM()}/></div>
             <div className="col-2"/>
             <div className="col-2"><Button symbol='.' click={() => this.decimalToInputActive()}/></div>
             <div className="col-2"><Button symbol='0' click={() => this.appendToInputActive(0)}/></div>
